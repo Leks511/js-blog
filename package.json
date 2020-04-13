@@ -1,0 +1,19 @@
+{
+  "name": "js-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leks511/js-blog.git"
+  },
+  "author": "Alexander Tselkovnikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leks511/js-blog/issues"
+  },
+  "homepage": "https://github.com/Leks511/js-blog#readme"
+}
