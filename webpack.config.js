@@ -6,7 +6,8 @@ module.exports = {
     path: __dirname + `/dist`,
     filename: `bundle.js`
   },
-  devServer:{
+  devtool: `source-map`,
+  devServer: {
     contentBase: __dirname + `/dist`
   },
   plugins: [
