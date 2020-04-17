@@ -1,5 +1,7 @@
 import {Component} from "../core/component";
 import {Form} from "../core/form";
+import {Validators} from "../core/validators";
+import {apiService} from "../services/api.service";
 
 class CreateComponent extends Component {
   constructor(id) {
@@ -10,22 +12,28 @@ class CreateComponent extends Component {
     this.el.addEventListener(`submit`, createPostFormSubmitHandler.bind(this));
 
     this.form = new Form(this.el, {
-      title: [],
-      fulltext: [],
+      title: [Validators.required],
+      fulltext: [Validators.required, Validators.minLength(10)],
     });
   }
 }
 
-function createPostFormSubmitHandler(evt) {
+async function createPostFormSubmitHandler(evt) {
   evt.preventDefault();
 
-  const formData = {
-    type: this.el.type.value,
-    ...this.form.value(),
-  };
+  if (this.form.isValid()) {
+    const formData = {
+      type: this.el.type.value,
+      date: new Date().toLocaleDateString(),
+      ...this.form.value(),
+    };
 
-  console.log(formData);
-  
+    await apiService.createPost(formData);
+
+    this.form.clear();
+
+    alert(`Вы внесли запись в БД`);
+  } 
 };
 
 export default CreateComponent;
