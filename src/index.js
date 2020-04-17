@@ -19,5 +19,3 @@ navigationComponent.registerTabs([
   {name: `posts`, component: postsComponent},
   {name: `favorite`, component: favoriteComponent},
 ]);
-
-console.log(navigationComponent.tabs)
