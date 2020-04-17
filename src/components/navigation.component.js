@@ -28,8 +28,6 @@ function tabClickHandler(evt) {
   this.tabs.forEach((tab) => tab.component.hide());
   
   activeTab.component.show();
-
-  console.log(activeTab);
 }
 
 export default NavigationComponent;
