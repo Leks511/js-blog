@@ -6,15 +6,18 @@ import {apiService} from "../services/api.service";
 import {TransformService} from "../services/transform.service";
 
 class PostsComponent extends Component {
-  constructor(id) {
+  constructor(id, {loader}) {
     super(id);
+
+    this.loader = loader;
   }
 
   async onShow() {
+    this.loader.show();
     const postsData = await apiService.fetchPosts();
     const posts = TransformService.fbObjectToArray(postsData);
     const html = posts.map(post => renderPosts(post)).join(``);
-
+    this.loader.hide();
     this.el.insertAdjacentHTML(`afterbegin`, html);
   }
 
