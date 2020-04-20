@@ -3,6 +3,7 @@ import {Component} from "../core/component";
 class NavigationComponent extends Component {
   constructor(id) {
     super(id);
+
     this.tabs = [];
   }
 

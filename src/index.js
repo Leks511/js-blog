@@ -13,7 +13,7 @@ const loaderComponent = new LoaderComponent(`loader`);
 
 const createComponent = new CreateComponent(`create`);
 const postsComponent = new PostsComponent(`posts`, {loader: loaderComponent});
-const favoriteComponent = new FavoriteComponent(`favorite`);
+const favoriteComponent = new FavoriteComponent(`favorite`, {loader: loaderComponent});
 
 
 navigationComponent.registerTabs([

@@ -1,6 +1,6 @@
 import {Component} from "../core/component";
 
-import {POST_TYPES} from "../core/constants";
+import renderPost from "../templates/post.template";
 
 import {apiService} from "../services/api.service";
 import {TransformService} from "../services/transform.service";
@@ -12,11 +12,15 @@ class PostsComponent extends Component {
     this.loader = loader;
   }
 
+  init() {
+    this.el.addEventListener(`click`, postButtonClickHandler.bind(this));
+  }
+
   async onShow() {
     this.loader.show();
     const postsData = await apiService.fetchPosts();
     const posts = TransformService.fbObjectToArray(postsData);
-    const html = posts.map(post => renderPosts(post)).join(``);
+    const html = posts.map(post => renderPost(post)).join(``);
     this.loader.hide();
     this.el.insertAdjacentHTML(`afterbegin`, html);
   }
@@ -26,37 +30,30 @@ class PostsComponent extends Component {
   }
 }
 
-function getTag(typeCode) {
-  const tag = POST_TYPES[typeCode];
-  const tagClass = typeCode === `news` ? `tag-blue` : ``
+function postButtonClickHandler(evt) {
+  const el = evt.target;
+  const addedPostId = el.dataset.postid;
+  
+  if (addedPostId) {
+    let favorites = JSON.parse(localStorage.getItem(`favorites`)) || [];
+    
+    if (favorites.includes(addedPostId)) {
+      el.textContent = `Сохранить`;
+      el.classList.remove(`button-danger`);
+      el.classList.add(`button-primary`);
 
-  return `<li class="tag ${tagClass} tag-rounded">${tag}</li>`;
-}
+      favorites = favorites.filter(favoritePostId => favoritePostId !== addedPostId);
+    } else {
+      el.textContent = `Удалить`;
+      el.classList.add(`button-danger`);
+      el.classList.remove(`button-primary`);
 
-function renderPosts(postData) {
-  const {title, fulltext, date, type} = postData;
-
-  const tagMorkup = getTag(type);
-
-  const button = `<button type="button" class="button-round button-small button-primary">Сохранить</button>`;
-
-  return (
-    `<div class="panel">
-      <div class="panel-head">
-        <p class="panel-title">${title}</p>
-        <ul class="tags">
-          ${tagMorkup}
-        </ul>
-      </div>
-      <div class="panel-body">
-        <p class="multi-line">${fulltext}</p>
-      </div>
-      <div class="panel-footer w-panel-footer">
-        <small>${date}</small>
-        ${button}
-      </div>
-    </div>`
-  );  
+      favorites.push(addedPostId);
+    }
+    
+    localStorage.setItem(`favorites`, JSON.stringify(favorites));
+  }
+  
 }
 
 export default PostsComponent;
