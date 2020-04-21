@@ -20,7 +20,7 @@ class PostsComponent extends Component {
     this.loader.show();
     const postsData = await apiService.fetchPosts();
     const posts = TransformService.fbObjectToArray(postsData);
-    const html = posts.map(post => renderPost(post)).join(``);
+    const html = posts.map(post => renderPost(post)).reverse().join(``);
     this.loader.hide();
     this.el.insertAdjacentHTML(`afterbegin`, html);
   }
