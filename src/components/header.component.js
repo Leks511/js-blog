@@ -1,8 +1,10 @@
 import {Component} from "../core/component";
 
 class HeaderComponent extends Component {
-  constructor(id) {
+  constructor(id, {application}) {
     super(id);
+    
+    this.application = application;
   }
 
   init() {
@@ -16,6 +18,7 @@ class HeaderComponent extends Component {
 function startButtonElementClickHandler() {
   localStorage.setItem(`visited`, JSON.stringify(true));
   this.hide();
+  this.application.show();
 };
 
 export default HeaderComponent;

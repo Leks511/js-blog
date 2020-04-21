@@ -5,8 +5,13 @@ import CreateComponent from "./components/create.component";
 import PostsComponent from "./components/posts.component";
 import FavoriteComponent from "./components/favorite.component";
 import LoaderComponent from "./components/loader.component";
+import MainComponent from "./components/main.component";
 
-new HeaderComponent(`header`);
+const mainComponent = new MainComponent(`application`);
+console.log(mainComponent);
+
+new HeaderComponent(`header`, {application: mainComponent});
+
 
 const navigationComponent = new NavigationComponent(`navigation`);
 const loaderComponent = new LoaderComponent(`loader`);
